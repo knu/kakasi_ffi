@@ -1,6 +1,6 @@
 # Kakasi for Ruby
 
-A Ruby binding for KAKASI implemented with Fiddle/DL
+A Ruby binding for KAKASI implemented with Fiddle/DL/FFI
 
 ## Description
 
@@ -9,8 +9,13 @@ This library is a port of Ruby/KAKASI to Ruby >=1.9.
 Ruby/KAKASI was an extention library written by GOTO Kentaro for
 ancient CRuby, which did not work with Ruby >=1.9 or JRuby,
 
-This implementation uses Fiddle/DL as a bridge to libkakasi, so it
-should work with any ruby that supports Fiddle/DL module.
+This implementation uses Fiddle/DL/FFI as a bridge to libkakasi, so it
+should work with any ruby that supports Fiddle/DL/FFI module, such as:
+
+- Ruby 1.9.3 (DL)
+- Ruby 2.0.0+ (Fiddle)
+- Rubinius (Rubinius::FFI)
+- JRuby (FFI)
 
 ## Installation
 
