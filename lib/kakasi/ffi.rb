@@ -7,7 +7,7 @@ module Kakasi
     end
     extend FFI::Library
 
-    ffi_lib 'kakasi'
+    ffi_lib LIBKAKASI
 
     attach_function 'kakasi_getopt_argv', [:int, :pointer], :int
     attach_function 'kakasi_do', [:string], :pointer

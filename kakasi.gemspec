@@ -16,7 +16,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
-  spec.extensions    = ["ext/kakasi-bridge/extconf.rb"]
+
+  case RUBY_ENGINE
+  when 'jruby'
+    spec.platform = 'java'
+  else
+    spec.extensions  = ["ext/kakasi-config/extconf.rb"]
+  end
 
   spec.required_ruby_version = '>= 1.9.3'
 

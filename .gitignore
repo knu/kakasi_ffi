@@ -15,5 +15,5 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-ext/kakasi-bridge/Makefile
-lib/kakasi/impl.rb
+ext/kakasi-config/Makefile
+lib/kakasi/config.rb
