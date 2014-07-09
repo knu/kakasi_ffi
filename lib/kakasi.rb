@@ -3,12 +3,14 @@ require 'kakasi/version'
 module Kakasi
   case RUBY_ENGINE
   when 'jruby'
-    IMPL = :ffi unless defined?(IMPL)
+    LIBPATH = [].freeze
+    IMPL = :ffi unless defined?(::Kakasi::IMPL)
   else
     begin
       require 'kakasi/config'
     rescue LoadError
-      IMPL = :ffi unless defined?(IMPL)
+      LIBPATH = [].freeze
+      IMPL = :ffi unless defined?(::Kakasi::IMPL)
     end
   end
 
