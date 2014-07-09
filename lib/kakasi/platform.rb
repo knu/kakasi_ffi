@@ -47,7 +47,7 @@ module Kakasi
           filename = File.join(dir, basename)
           yield filename
           return filename
-        rescue
+        rescue LoadError, StandardError
           next
         end
       }
