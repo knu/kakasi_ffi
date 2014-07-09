@@ -36,46 +36,31 @@ module KakasiExtConf
 
   print 'checking for kakasi... '
 
-  libkakasi = Enumerator.new { |y|
-    libfilename = RbConfig::CONFIG['LIBRUBY_SO'].tap { |so|
-      prefix = so[/\A(?:lib|)/]
-      suffix = so[/\.(?![0-9]+(?:\.|\z))[^.]+/] or raise 'failed to detect the file extension for dynamic libraries'
-      break prefix + 'kakasi' + suffix
-    }
+  require '../../lib/kakasi/platform.rb'
 
-    $LIBPATH.each { |dir|
-      y << File.join(dir, libfilename)
-    }
-    y << 'kakasi'
-    y << 'libkakasi'
-    y << libfilename
-  }.find { |lib|
-    begin
+  begin
+    libkakasi = Kakasi::Lib.try_load($LIBPATH) { |lib|
       case default_impl
       when :fiddle, :dl
         dlload lib
       when :ffi
         ffi_lib lib
       else
-        next false
+        raise LoadError, 'NOTREACHED'
       end
-      puts lib
-      true
-    rescue LoadError, StandardError
-      false
-    end
-  } or
-    begin
-      puts 'FAILED!'
-      exit false
-    end
+    }
+    puts libkakasi
+  rescue LoadError
+    puts 'FAILED!'
+    exit false
+  end
 
   '../../lib/kakasi/config.rb'.tap { |rb|
     puts 'creating %s' % rb
     File.open(File.expand_path(rb, File.dirname(__FILE__)), 'wt') { |f|
-      f.print <<-'EOF' % [libkakasi.inspect, default_impl.inspect]
+      f.print <<-'EOF' % [$LIBPATH.inspect, default_impl.inspect]
 module Kakasi
-  LIBKAKASI = %s unless defined?(LIBKAKASI)
+  LIBPATH = %s unless defined?(LIBPATH)
   IMPL = %s unless defined?(IMPL)
 end
       EOF

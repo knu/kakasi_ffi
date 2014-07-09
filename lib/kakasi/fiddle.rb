@@ -14,7 +14,11 @@ module Kakasi
       raise 'Unsupported pointer size: %u' % SIZEOF_VOIDP
     end
 
-    dlload LIBKAKASI
+    require 'kakasi/platform'
+
+    try_load { |lib|
+      dlload lib
+    }
 
     extern 'int kakasi_getopt_argv(int, char **)'
     extern 'char *kakasi_do(char *)'
