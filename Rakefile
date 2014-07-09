@@ -18,3 +18,12 @@ Rake::RDocTask.new do |rdoc|
 end
 
 task :default => :test
+
+task :compile do
+  gemspec.extensions.each { |ext|
+    dir, extconf = File.split(ext)
+    chdir(dir) {
+      ruby extconf
+    }
+  }
+end
