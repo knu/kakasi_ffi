@@ -13,7 +13,6 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
-    - rvm: rbx-2
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libkakasi2 libkakasi2-dev
