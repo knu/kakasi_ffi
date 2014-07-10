@@ -19,7 +19,11 @@ module KakasiExtConf
     },
 
     ffi: ->{
-      require 'ffi'
+      if defined?(Rubinius)
+        FFI = Rubinius::FFI
+      else
+        require 'ffi'
+      end
       extend FFI::Library
     },
   }.find { |impl, code|
