@@ -36,24 +36,37 @@ module Kakasi
           end
       end.freeze
 
-    def self.map_library_name(name)
-      "#{LIBPREFIX}#{name}.#{LIBSUFFIX}"
-    end
+    class << self
+      def try_load(libpath = LIBPATH)
+        basename = map_library_name('kakasi')
+        (libpath | DEFLIBPATH).each { |dir|
+          filename = File.join(dir, basename)
+          begin
+            yield filename
+          rescue LoadError
+            next
+          rescue
+            next
+          end
+          return filename
+        }
 
-    def self.try_load(libpath = LIBPATH)
-      basename = map_library_name('kakasi')
-      (libpath | DEFLIBPATH).each { |dir|
-        filename = File.join(dir, basename)
         begin
-          yield filename
-        rescue LoadError, StandardError
-          next
+          yield basename
+        rescue LoadError
+          raise
+        rescue
+          raise LoadError, $!.message
         end
-        return filename
-      }
 
-      yield basename
-      return basename
+        return basename
+      end
+
+      private
+
+      def map_library_name(name)
+        "#{LIBPREFIX}#{name}.#{LIBSUFFIX}"
+      end
     end
   end
 end
