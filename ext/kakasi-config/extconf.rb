@@ -55,7 +55,7 @@ module KakasiExtConf
     }
     puts libkakasi
   rescue LoadError
-    puts 'FAILED!'
+    puts 'failed -- libkakasi is not found'
     exit false
   end
 
