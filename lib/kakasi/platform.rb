@@ -27,7 +27,7 @@ module Kakasi
 
     DEFLIBPATH =
       begin
-        [RbConfig::CONFIG['libir']] |
+        [RbConfig::CONFIG['libdir']] |
           case RbConfig::CONFIG['host_os']
           when /mingw|mswin/i
             []
@@ -43,13 +43,13 @@ module Kakasi
     def self.try_load(libpath = LIBPATH)
       basename = map_library_name('kakasi')
       (libpath | DEFLIBPATH).each { |dir|
+        filename = File.join(dir, basename)
         begin
-          filename = File.join(dir, basename)
           yield filename
-          return filename
         rescue LoadError, StandardError
           next
         end
+        return filename
       }
 
       yield basename
