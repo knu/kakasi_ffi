@@ -44,7 +44,7 @@ module Kakasi
 
         encoding = string.encoding
         result = ''.force_encoding(INTERNAL_ENCODING)
-        string.encode(INTERNAL_ENCODING).split(/(\0+)/).each { |str, nul|
+        string.encode(INTERNAL_ENCODING, invalid: :replace, undef: :replace, replace: '_').split(/(\0+)/).each { |str, nul|
           buf = kakasi_do(str)
           result << buf.read_string.force_encoding(INTERNAL_ENCODING)
           kakasi_free(buf)
