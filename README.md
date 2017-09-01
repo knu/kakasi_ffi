@@ -6,7 +6,7 @@ A Ruby binding for KAKASI implemented with Fiddle/DL/FFI
 
 This library is a port of Ruby/KAKASI to Ruby >=1.9.
 
-Ruby/KAKASI was an extention library written by GOTO Kentaro for
+Ruby/KAKASI was an extension library written by GOTO Kentaro for
 ancient CRuby, which did not work with Ruby >=1.9 or JRuby,
 
 This implementation uses Fiddle/DL/FFI as a bridge to libkakasi, so it
