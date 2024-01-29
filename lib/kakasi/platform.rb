@@ -31,6 +31,8 @@ module Kakasi
           case RbConfig::CONFIG['host_os']
           when /mingw|mswin/i
             []
+          when /darwin/i
+            %w[/usr/lib /usr/local/lib]
           else
             %w[/lib /usr/lib]
           end
